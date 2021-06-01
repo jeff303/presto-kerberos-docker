@@ -21,7 +21,8 @@ services:
       - POST_BOOTSTRAP_COMMAND=
         /opt/kerberos-utils/create_admin.sh alice alice;
         /opt/kerberos-utils/create_client.sh bob bob /root/share/client.keytab;
-        /opt/kerberos-utils/create_service.sh presto-kerberos HTTP /root/share/presto.keytab
+        /opt/kerberos-utils/create_service.sh presto-kerberos HTTP /root/share/presto.keytab;
+        /opt/kerberos-utils/create_service.sh presto-kerberos presto /root/share/presto.keytab
     healthcheck:
       test: 'ss -ltpn | grep :88'
       interval: 5s
@@ -41,6 +42,7 @@ services:
       example.com:
         ipv4_address: 10.5.0.3
     ports:
+      - "37778:7778"
       - "38080:8080"
     volumes:
       - ./share:/home/presto
